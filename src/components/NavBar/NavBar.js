@@ -5,19 +5,23 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown'; 
 import Button from 'react-bootstrap/Button';
-
+import {NavLink} from 'react-router-dom';
 class  NavBar extends Component{
     render()
     {
         return (
             
             <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">iCare</Navbar.Brand>
+            <Navbar.Brand ><NavLink to ="/"
+            activeClassName="my-active"
+            activeStyle={{
+                textDecoration: 'None'
+            }}>iCare</NavLink></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link href="#home">MyIssues</Nav.Link>
-                <Nav.Link href="#link">Add Issue</Nav.Link>
+                <Nav.Link><NavLink to="/addIssue">Add Issue</NavLink></Nav.Link>
                 <NavDropdown title="Other Wards" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Other Wards</NavDropdown.Item>
                   </NavDropdown>

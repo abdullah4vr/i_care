@@ -1,16 +1,18 @@
 import React from 'react';
-import NavBar from './components/NavBar/NavBar'
 import './App.css';
-import Container from 'react-bootstrap/Container';
-import InfoSlab from './components/InfoSlab/InfoSlab'
-import Issues from './components/Issues/Issues';
+import {Route,BrowserRouter,Switch} from 'react-router-dom';
+import IssueListing from './components/IssueListing/IssueListing'; 
+import SingleIssue from './components/SingleIssue/SingleIssue';
+import AddIssue from './components/AddIssue/AddIssue';
 function App() {
   return (
-      <Container>
-      <NavBar/>
-      <InfoSlab/>
-      <Issues/>
-      </Container>
+    <BrowserRouter>
+    <Switch>
+    <Route path="/issue/:id" exact component={SingleIssue} />
+    <Route path="/addIssue" exact component={AddIssue} />
+    <Route path="/" component ={IssueListing}/>
+    </Switch>
+    </BrowserRouter>
   );
 }
 
