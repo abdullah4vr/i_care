@@ -11,7 +11,7 @@ class LocMap extends Component{
           <Map
           google={this.props.google}
           style={{'width':'50%','height':'50%'}}
-          zoom={20}
+          zoom={15}
           initialCenter={{ lat: this.props.lat, lng: this.props.long}}
         >
           <Marker position={{ lat: this.props.lat, lng: this.props.long}} />

@@ -5,19 +5,53 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import LocMap from "../LocMap/LocMap";
+
 class AddIssue extends Component{
     state = {
         myLat : 47.44,
         myLong : -122.444,
-        up : 0
+        up : 0,
+        selectedFile : null
     }
+
+
+    fileSelectedHandler = event =>{
+        console.log(event.target.files[0]);
+        this.setState({selectedFile : event.target.files[0]});
+        let desc = document.getElementById('desc').value;
+        console.log(desc);
+    }
+
+
+    fileUploadHandler = () =>{
+        const fd = new FormData();
+        let desc = document.getElementById('desc').value;
+        console.log(desc);
+        //fd.set('desc',desc);
+        //fd.append('upfile',this.state.selectedFile,this.state.selectedFile.name);
+        fd.set('title',desc);
+        fd.set('body','foo');
+        fd.set('userId','1');
+        console.log(fd);
+        axios({
+            method: 'post',
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            data: fd,
+            headers: {'content-Type': 'multipart/form-data' }
+            }).then(response =>{
+            console.log(response);
+            document.writeln("Bad");
+            alert("Nothing happened");
+        }).catch(error => {
+            document.writeln(error);
+               alert("Something happened");
+          });
+        alert("What has happened");
+    }
+
     componentDidMount()
     {
-        axios.get('https://mighty-shelf-14586.herokuapp.com/')
-        .then(response =>{
-            console.log(response.status);
-        })
-        
+                
         let x = navigator.geolocation;
         
 		let success =(position) =>
@@ -56,20 +90,22 @@ class AddIssue extends Component{
                     <Container style ={ {'textAlign' : 'center'}}>
                     <Container style ={{'dispay' : 'block','width' : '50%',
                      'marginTop' : '100px'}}>
-                    <Form>
+                    <Form >
                     <Form.Label><strong>Image of the place</strong></Form.Label>
                     <Form.Group controlId="Upload the image">
                     <Form.File 
                           id="custom-file"
                           label="Upload the image"
+                          name="upfile"
+                          onChange = {this.fileSelectedHandler}
                                custom
                               />
                     </Form.Group >
-                   <Form.Group controlId="IssueDesc" style = {{'marginTop' : '10%'}}>
+                   <Form.Group  style = {{'marginTop' : '10%'}}>
                    <Form.Label><strong>Issue Description</strong></Form.Label>
-                   <Form.Control type="email" placeholder="Briefly describe the issue " />
+                   <Form.Control name='desc' type="text" placeholder="Briefly describe the issue " id="desc"/>
                     </Form.Group>
-                    <Button type="submit">Submit form</Button>
+                    <Button type="submit" onClick={this.fileUploadHandler}>Submit form</Button>
                         </Form>  
                         </Container>                            
                     </Container> 
